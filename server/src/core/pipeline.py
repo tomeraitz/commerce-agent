@@ -134,6 +134,12 @@ async def _run_pipeline(
     except Exception as exc:
         raise AgentError(f"Sales agent failed: {exc}") from exc
 
+    logger.info(
+        "sales_decision",
+        action=sales_result.action,
+        has_requirements=sales_result.requirements is not None,
+    )
+
     if sales_result.action == "ask_user":
         if sales_result.requirements:
             session.requirements = sales_result.requirements
@@ -148,9 +154,22 @@ async def _run_pipeline(
     # ── Step 4: Execute search plan ──────────────────────────────────
     try:
         plan = build_search_plan(requirements)
+        logger.info(
+            "search_plan_built",
+            api_calls=[c.path for c in plan.api_calls],
+            limit=plan.limit,
+            post_filters=plan.post_filters.model_dump(),
+            requirements=requirements.model_dump(exclude_none=True),
+        )
         raw_products = await client.execute_plan(plan)
-    except Exception:
-        logger.warning("search_plan execution failed")
+        logger.info(
+            "search_raw_count",
+            n=len(raw_products),
+            sample_prices=[p.price for p in raw_products[:5]],
+            sample_titles=[p.title for p in raw_products[:5]],
+        )
+    except Exception as exc:
+        logger.warning("search_plan execution failed", error=str(exc))
         response = ChatResponse(
             message="Sorry, I had trouble searching for products. Please try again.",
             products=[],
@@ -160,12 +179,14 @@ async def _run_pipeline(
 
     # ── Step 5: Post-filter ──────────────────────────────────────────
     filtered = apply_filters(raw_products, plan.post_filters)
+    logger.info("search_filtered_count", n=len(filtered))
     products = sort_and_slice(
         filtered,
         requirements.sort_by,
         requirements.sort_order,
         plan.limit,
     )
+    logger.info("search_final_count", n=len(products))
 
     # ── Step 6: Recommendation (conditional) ─────────────────────────
     should_recommend = (
