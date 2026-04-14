@@ -11,7 +11,7 @@ uv sync
 ## Run
 
 ```bash
-uv run uvicorn src.main:app --reload
+python -m uv run uvicorn src.main:app --host 127.0.0.1 --port 8000 --env-file .env
 ```
 
 ## Test
