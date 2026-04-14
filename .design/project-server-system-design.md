@@ -29,6 +29,84 @@ config.py        # Settings (OpenAI key, model names, DummyJSON base URL)
 main.py          # FastAPI app factory
 ```
 
+### Full server file structure
+
+```
+server/
+├── pyproject.toml                    # Poetry/uv project definition, deps, tool config
+├── uv.lock                           # Locked dependency versions
+├── .env.example                      # Template: OPENAI_API_KEY, DUMMYJSON_BASE_URL, MODEL_NANO, MODEL_MINI
+├── .python-version                   # 3.12
+├── README.md                         # Run instructions, env vars, eval command
+├── Dockerfile                        # Single-worker uvicorn image (see Deployment constraints)
+│
+├── src/
+│   ├── __init__.py
+│   ├── main.py                       # FastAPI app factory; wires routers, middleware, lifespan
+│   ├── config.py                     # pydantic-settings Settings class
+│   │
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── chat.py                   # POST /chat router — orchestrates the per-turn pipeline
+│   │   └── health.py                 # GET /health liveness probe
+│   │
+│   ├── agents/
+│   │   ├── __init__.py
+│   │   ├── orchestrator.py           # gpt-5.4-nano intent classifier → Intent
+│   │   ├── sales.py                  # gpt-5.4-mini requirements gatherer → ask_user | search
+│   │   ├── recommendation.py         # gpt-5.4-mini → top_pick, alternatives, cross_sell
+│   │   └── prompts/                  # System prompts as .md/.txt, loaded at startup
+│   │       ├── orchestrator.md
+│   │       ├── sales.md
+│   │       └── recommendation.md
+│   │
+│   ├── schemas/
+│   │   ├── __init__.py
+│   │   ├── intent.py                 # Intent, IntentType enum
+│   │   ├── requirements.py           # Requirements (category, price band, brand, rating, sort…)
+│   │   ├── search_plan.py            # SearchPlan, ApiCall, PostFilters
+│   │   ├── product.py                # DummyJSON product shape
+│   │   ├── recommendation.py         # Recommendation (top_pick, alternatives, cross_sell)
+│   │   └── chat.py                   # ChatRequest, ChatResponse (the wire contract)
+│   │
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── dummyjson_client.py       # httpx.AsyncClient wrapper + tenacity retries + timeouts
+│   │   ├── search_planner.py         # build_search_plan(requirements) — deterministic
+│   │   ├── post_filters.py           # minPrice/maxPrice/minRating/brand + sort/slice
+│   │   └── session_store.py          # SessionStore Protocol + InMemorySessionStore default
+│   │
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── pipeline.py               # run_turn(session, message) — glues agents + services
+│   │   └── errors.py                 # Domain exceptions (AgentError, UpstreamError, …)
+│   │
+│   └── middleware/
+│       ├── __init__.py
+│       ├── logging.py                # structlog request logger; per-turn correlation id
+│       └── errors.py                 # Exception → JSON error response handler
+│
+└── tests/
+    ├── __init__.py
+    ├── conftest.py                   # Shared fixtures: test client, fake session store, VCR
+    ├── unit/
+    │   ├── test_search_planner.py    # Requirements → SearchPlan mapping table
+    │   ├── test_post_filters.py      # Price/rating/brand + sort edge cases
+    │   └── test_session_store.py     # InMemorySessionStore semantics
+    ├── integration/
+    │   ├── test_chat_endpoint.py     # POST /chat happy paths + fallbacks
+    │   └── test_dummyjson_client.py  # Retries, timeouts (mocked transport)
+    └── eval/
+        └── intent_classification.jsonl  # Labeled (message, expected_intent) pairs; `pytest -m eval`
+```
+
+**Notes on the layout**
+
+- `src/` layout (not flat) keeps imports unambiguous and matches the `cv-creator` server.
+- `agents/prompts/` holds prompts as text files so prompt changes are reviewable as diffs and don't require Python edits.
+- `core/pipeline.py` is the single seam the `api/chat.py` router calls into — agents and services are never orchestrated from inside the router.
+- `tests/eval/` is separate from unit/integration so the regular `pytest` run stays fast; the eval suite runs only under `pytest -m eval` (see **Intent classification eval plan**).
+
 ---
 
 ## Sequence Diagram
