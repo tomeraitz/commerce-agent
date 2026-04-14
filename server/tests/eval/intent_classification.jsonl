@@ -1,0 +1,36 @@
+{"message": "hello", "expected_intent": "greeting"}
+{"message": "hi there!", "expected_intent": "greeting"}
+{"message": "hey", "expected_intent": "greeting"}
+{"message": "good morning", "expected_intent": "greeting"}
+{"message": "howdy", "expected_intent": "greeting"}
+{"message": "what's up", "expected_intent": "greeting"}
+{"message": "what's the weather today?", "expected_intent": "out_of_scope"}
+{"message": "who won the basketball game?", "expected_intent": "out_of_scope"}
+{"message": "what is 2 + 2?", "expected_intent": "out_of_scope"}
+{"message": "tell me a joke", "expected_intent": "out_of_scope"}
+{"message": "what's the capital of France?", "expected_intent": "out_of_scope"}
+{"message": "I need a laptop under $500", "expected_intent": "product_discovery"}
+{"message": "show me phones", "expected_intent": "product_discovery"}
+{"message": "I'm looking for headphones", "expected_intent": "product_discovery"}
+{"message": "what skincare products do you have?", "expected_intent": "product_discovery"}
+{"message": "find me a good tablet", "expected_intent": "product_discovery"}
+{"message": "I want to buy a new TV", "expected_intent": "product_discovery"}
+{"message": "do you have any running shoes?", "expected_intent": "product_discovery"}
+{"message": "looking for a gift for my mom", "expected_intent": "product_discovery"}
+{"message": "search for wireless earbuds", "expected_intent": "product_discovery"}
+{"message": "what furniture do you sell?", "expected_intent": "product_discovery"}
+{"message": "actually make it Samsung", "expected_intent": "follow_up"}
+{"message": "under $200 instead", "expected_intent": "follow_up"}
+{"message": "something cheaper", "expected_intent": "follow_up"}
+{"message": "can you filter by 4 stars and above?", "expected_intent": "follow_up"}
+{"message": "show me only the black ones", "expected_intent": "follow_up"}
+{"message": "tell me more about product 5", "expected_intent": "product_detail"}
+{"message": "details on the iPhone 15", "expected_intent": "product_detail"}
+{"message": "what are the specs of product 12?", "expected_intent": "product_detail"}
+{"message": "give me info on that Samsung Galaxy", "expected_intent": "product_detail"}
+{"message": "I want to know more about the third one", "expected_intent": "product_detail"}
+{"message": "compare the top two", "expected_intent": "comparison"}
+{"message": "which one should I buy?", "expected_intent": "comparison"}
+{"message": "what's the best option?", "expected_intent": "comparison"}
+{"message": "how do the first and second compare?", "expected_intent": "comparison"}
+{"message": "help me decide between these", "expected_intent": "comparison"}
