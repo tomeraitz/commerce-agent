@@ -16,7 +16,7 @@ def _get_agent() -> Agent[None, Recommendation]:
     return Agent(
         model=f"openai:{settings.model_mini}",
         system_prompt=_prompt,
-        result_type=Recommendation,
+        output_type=Recommendation,
     )
 
 
@@ -34,4 +34,4 @@ async def recommend(
         f"User message: {user_message}"
     )
     result = await _get_agent().run(user_prompt)
-    return result.data
+    return result.output

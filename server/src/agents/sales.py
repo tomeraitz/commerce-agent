@@ -21,7 +21,7 @@ def _get_agent() -> Agent[None, SalesDecision]:
     return Agent(
         model=f"openai:{settings.model_mini}",
         system_prompt=_prompt,
-        result_type=SalesDecision,
+        output_type=SalesDecision,
     )
 
 
@@ -50,4 +50,4 @@ async def run_sales(
 
     user_prompt = "\n\n".join(parts)
     result = await _get_agent().run(user_prompt)
-    return result.data
+    return result.output

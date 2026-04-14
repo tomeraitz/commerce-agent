@@ -14,7 +14,7 @@ def _get_agent() -> Agent[None, Intent]:
     return Agent(
         model=f"openai:{settings.model_nano}",
         system_prompt=_prompt,
-        result_type=Intent,
+        output_type=Intent,
     )
 
 
@@ -31,4 +31,4 @@ async def classify_intent(message: str, history: list[dict]) -> Intent:
 
     user_prompt = f"{history_text}Current user message: {message}"
     result = await _get_agent().run(user_prompt)
-    return result.data
+    return result.output
