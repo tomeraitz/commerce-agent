@@ -124,7 +124,12 @@ async def _run_pipeline(
 
     # ── Step 3: Sales agent (product_discovery / follow_up) ──────────
     try:
-        sales_result = await run_sales(message, session.history, session.requirements)
+        sales_result = await run_sales(
+            message,
+            session.history,
+            session.requirements,
+            client=client,
+        )
     except ValidationError as exc:
         logger.error(
             "sales agent structured-output validation failed",
@@ -188,7 +193,23 @@ async def _run_pipeline(
     )
     logger.info("search_final_count", n=len(products))
 
-    # ── Step 6: Recommendation (conditional) ─────────────────────────
+    # ── Step 6: No results — tell the user honestly ──────────────────
+    if not products:
+        described = (
+            requirements.category
+            or (" ".join(requirements.keywords) if requirements.keywords else None)
+            or "that"
+        )
+        response_msg = (
+            f"I couldn't find any matches for {described} in the catalog. "
+            "Want to broaden the search — a different category, a wider budget, "
+            "or drop a specific feature?"
+        )
+        response = ChatResponse(message=response_msg, products=[])
+        _update_session(session, message, response_msg)
+        return session, response
+
+    # ── Step 7: Recommendation (conditional) ─────────────────────────
     should_recommend = (
         len(products) >= 2
         or intent.intent == IntentType.comparison
