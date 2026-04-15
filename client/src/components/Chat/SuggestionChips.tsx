@@ -4,9 +4,9 @@ interface SuggestionChipsProps {
 
 const CHIPS: readonly string[] = [
   "I'm looking for a new smartphone",
-  "Show me laptops under $1000",
+  "Show me laptops under $2000",
   "Recommend a gift under $50",
-  "Compare these two",
+  "Find me sunglasses under $30",
 ];
 
 export function SuggestionChips({ onPick }: SuggestionChipsProps) {
