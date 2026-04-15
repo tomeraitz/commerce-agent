@@ -1,0 +1,34 @@
+# Virtual envs and caches
+.venv/
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env files (inject via runtime, not baked into image)
+.env
+.env.*
+!.env.example
+
+# Tests and docs
+tests/
+README.md
+
+# VCS / IDE
+.git/
+.gitignore
+.idea/
+.vscode/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Docker meta
+Dockerfile
+.dockerignore

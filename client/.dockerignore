@@ -1,0 +1,21 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+
+# VCS / IDE
+.git/
+.gitignore
+.idea/
+.vscode/
+
+# Docker meta
+Dockerfile
+.dockerignore
+
+# Build cache
+tsconfig.tsbuildinfo
