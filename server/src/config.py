@@ -8,6 +8,10 @@ class Settings(BaseSettings):
     model_nano: str = "gpt-5.4-nano"
     model_mini: str = "gpt-5.4-mini"
     log_level: str = "INFO"
+    cors_allow_origins: list[str] = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ]
 
 
 settings = Settings()
