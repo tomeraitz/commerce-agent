@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Olive the owl mascot">
+  <title>Olive the Owl</title>
+  <!-- Branch under the owl -->
+  <rect x="40" y="170" width="120" height="6" rx="3" fill="#6B4F2A"/>
+  <!-- Body -->
+  <ellipse cx="100" cy="115" rx="55" ry="60" fill="#059669"/>
+  <!-- Belly -->
+  <ellipse cx="100" cy="130" rx="32" ry="38" fill="#D1FAE5"/>
+  <!-- Wings -->
+  <path d="M48 110 C 38 130, 42 160, 60 168 L 70 130 Z" fill="#047857"/>
+  <path d="M152 110 C 162 130, 158 160, 140 168 L 130 130 Z" fill="#047857"/>
+  <!-- Feet -->
+  <path d="M82 168 l -6 8 m 6 -8 l 0 8 m 0 -8 l 6 8" stroke="#F59E0B" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M118 168 l -6 8 m 6 -8 l 0 8 m 0 -8 l 6 8" stroke="#F59E0B" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Head -->
+  <circle cx="100" cy="75" r="48" fill="#059669"/>
+  <!-- Ear tufts -->
+  <path d="M62 42 L 70 60 L 56 60 Z" fill="#047857"/>
+  <path d="M138 42 L 144 60 L 130 60 Z" fill="#047857"/>
+  <!-- Face plate -->
+  <ellipse cx="100" cy="82" rx="38" ry="34" fill="#FAF7F2"/>
+  <!-- Glasses (round amber frames) -->
+  <circle cx="84" cy="80" r="14" fill="none" stroke="#F59E0B" stroke-width="3"/>
+  <circle cx="116" cy="80" r="14" fill="none" stroke="#F59E0B" stroke-width="3"/>
+  <line x1="98" y1="80" x2="102" y2="80" stroke="#F59E0B" stroke-width="3"/>
+  <!-- Eyes -->
+  <circle cx="84" cy="80" r="6" fill="#1F2937"/>
+  <circle cx="116" cy="80" r="6" fill="#1F2937"/>
+  <circle cx="86" cy="78" r="2" fill="#FFFFFF"/>
+  <circle cx="118" cy="78" r="2" fill="#FFFFFF"/>
+  <!-- Beak -->
+  <path d="M100 92 L 94 100 L 106 100 Z" fill="#F59E0B"/>
+  <!-- Shopping tag (held bottom-right) -->
+  <g transform="translate(132 138) rotate(20)">
+    <path d="M0 0 L 26 0 L 36 12 L 26 24 L 0 24 Z" fill="#F59E0B" stroke="#B45309" stroke-width="1.5"/>
+    <circle cx="28" cy="12" r="2" fill="#FAF7F2"/>
+    <line x1="-8" y1="-6" x2="0" y2="0" stroke="#6B4F2A" stroke-width="2"/>
+  </g>
+</svg>

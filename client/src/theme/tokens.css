@@ -1,0 +1,13 @@
+:root {
+  --color-bg: #FAF7F2;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F3EFE7;
+  --color-primary: #059669;
+  --color-primary-hover: #047857;
+  --color-primary-soft: #D1FAE5;
+  --color-accent: #F59E0B;
+  --color-text: #1F2937;
+  --color-text-muted: #6B7280;
+  --color-border: #E5E7EB;
+  --color-danger: #DC2626;
+}
